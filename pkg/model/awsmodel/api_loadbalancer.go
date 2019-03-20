@@ -138,6 +138,8 @@ func (b *APILoadBalancerBuilder) Build(c *fi.ModelBuilderContext) error {
 			ConnectionSettings: &awstasks.LoadBalancerConnectionSettings{
 				IdleTimeout: i64(int64(idleTimeout.Seconds())),
 			},
+
+			Tags: b.Cluster.Spec.CloudLabels,
 		}
 
 		// Only set if specified so we don't change existing logic
