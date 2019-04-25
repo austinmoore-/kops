@@ -44,6 +44,8 @@ GOVETABLE_PACKAGES:=$(shell egrep -v "k8s.io/kops/vendor|clientset/fake" hack/.p
 BAZEL_OPTIONS?=
 API_OPTIONS?=
 GCFLAGS?=
+ARTIFACTORY_USER?=must-override
+ARTIFACTORY_PASSWORD?=must-override
 
 # See http://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile
 MAKEDIR:=$(strip $(shell dirname "$(realpath $(lastword $(MAKEFILE_LIST)))"))
@@ -326,6 +328,11 @@ vsphere-version-dist: nodeup-dist protokube-export
 .PHONY: upload
 upload: version-dist # Upload kops to S3
 	aws s3 sync --acl public-read ${UPLOAD}/ ${S3_BUCKET}
+
+.PHONY: artifactory-upload
+artifactory-upload: bazel-version-dist
+	cd ${BAZELUPLOAD}/kops; zip -r ${VERSION}.zip ${VERSION}
+	curl --user ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} --header "X-Explode-Archive: true" --upload-file ${BAZELUPLOAD}/kops/${VERSION}.zip "https://artifactory.cloud.capitalone.com/artifactory/generic-internalfacing/identity-sre/kops/${VERSION}.zip"
 
 # gcs-upload builds kops and uploads to GCS
 .PHONY: gcs-upload
