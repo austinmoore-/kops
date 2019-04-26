@@ -130,9 +130,10 @@ func (b *AutoscalingGroupModelBuilder) Build(c *fi.ModelBuilderContext) error {
 				t.SecurityGroups = append(t.SecurityGroups, sgTask)
 			}
 
-			if t.SSHKey, err = b.LinkToSSHKey(); err != nil {
-				return err
-			}
+			// @step: attach the ssh key to the instancegroup
+			//if t.SSHKey, err = b.LinkToSSHKey(); err != nil {
+			//	return nil, err
+			//}
 
 			if t.UserData, err = b.BootstrapScript.ResourceNodeUp(ig, b.Cluster); err != nil {
 				return err
