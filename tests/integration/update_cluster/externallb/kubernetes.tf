@@ -225,16 +225,10 @@ resource "aws_internet_gateway" "externallb-example-com" {
   }
 }
 
-resource "aws_key_pair" "kubernetes-externallb-example-com-c4a6ed9aa889b9e2c39cd663eb9c7157" {
-  key_name   = "kubernetes.externallb.example.com-c4:a6:ed:9a:a8:89:b9:e2:c3:9c:d6:63:eb:9c:71:57"
-  public_key = "${file("${path.module}/data/aws_key_pair_kubernetes.externallb.example.com-c4a6ed9aa889b9e2c39cd663eb9c7157_public_key")}"
-}
-
 resource "aws_launch_configuration" "master-us-test-1a-masters-externallb-example-com" {
   name_prefix                 = "master-us-test-1a.masters.externallb.example.com-"
   image_id                    = "ami-12345678"
   instance_type               = "m3.medium"
-  key_name                    = "${aws_key_pair.kubernetes-externallb-example-com-c4a6ed9aa889b9e2c39cd663eb9c7157.id}"
   iam_instance_profile        = "${aws_iam_instance_profile.masters-externallb-example-com.id}"
   security_groups             = ["${aws_security_group.masters-externallb-example-com.id}"]
   associate_public_ip_address = true
@@ -262,7 +256,6 @@ resource "aws_launch_configuration" "nodes-externallb-example-com" {
   name_prefix                 = "nodes.externallb.example.com-"
   image_id                    = "ami-12345678"
   instance_type               = "t2.medium"
-  key_name                    = "${aws_key_pair.kubernetes-externallb-example-com-c4a6ed9aa889b9e2c39cd663eb9c7157.id}"
   iam_instance_profile        = "${aws_iam_instance_profile.nodes-externallb-example-com.id}"
   security_groups             = ["${aws_security_group.nodes-externallb-example-com.id}"]
   associate_public_ip_address = true
