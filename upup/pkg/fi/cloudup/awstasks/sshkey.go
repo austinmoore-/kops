@@ -196,6 +196,9 @@ func (e *SSHKey) IsExistingKey() bool {
 }
 
 func (e *SSHKey) TerraformLink() *terraform.Literal {
+	if e.NoSSHKey() {
+		return nil
+	}
 	if e.IsExistingKey() {
 		return terraform.LiteralFromStringValue(*e.Name)
 	}
@@ -221,4 +224,8 @@ func (_ *SSHKey) RenderCloudformation(t *cloudformation.CloudformationTarget, a,
 	}
 
 	return nil
+}
+
+func (e *SSHKey) NoSSHKey() bool {
+	return *e == SSHKey{}
 }
