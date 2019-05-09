@@ -726,6 +726,12 @@ spec:
   sshKeyName: myexistingkey
 ```
 
+If you want to create your instance without any SSH keys you can set this to an empty string:
+```yaml
+spec:
+  sshKeyName: ""
+```
+
 ### target
 
 In some use-cases you may wish to augment the target output with extra options.  `target` supports a minimal amount of options you can do this with.  Currently only the terraform target supports this, but if other use cases present themselves, kops may eventually support more.
