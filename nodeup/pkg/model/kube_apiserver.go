@@ -18,6 +18,7 @@ package model
 
 import (
 	"fmt"
+	"k8s.io/kops/util/pkg/proxy"
 	"path/filepath"
 	"strings"
 
@@ -399,7 +400,7 @@ func (b *KubeAPIServerBuilder) buildPod() (*v1.Pod, error) {
 			"/usr/local/bin/kube-apiserver",
 			sortedStrings(flags),
 			"/var/log/kube-apiserver.log"),
-		Env: getProxyEnvVars(b.Cluster.Spec.EgressProxy),
+		Env: proxy.GetProxyEnvVars(b.Cluster.Spec.EgressProxy),
 		LivenessProbe: &v1.Probe{
 			Handler: v1.Handler{
 				HTTPGet: probeAction,
