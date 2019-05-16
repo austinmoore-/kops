@@ -836,7 +836,7 @@ func (b *DockerBuilder) Build(c *fi.ModelBuilderContext) error {
 
 	dv, err := b.findDockerVersions(v)
 	if err != nil {
-		klog.Warningf("No Docker versions found: %s", err)
+		glog.Warningf("No Docker versions found: %s", err)
 	}
 
 	for _, d := range dv {
