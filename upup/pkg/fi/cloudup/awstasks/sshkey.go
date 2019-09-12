@@ -207,6 +207,10 @@ func (e *SSHKey) TerraformLink() *terraform.Literal {
 }
 
 func (_ *SSHKey) RenderCloudformation(t *cloudformation.CloudformationTarget, a, e, changes *SSHKey) error {
+	if e.NoSSHKey() {
+		return nil
+	}
+
 	cloud := t.Cloud.(awsup.AWSCloud)
 
 	klog.Warningf("Cloudformation does not manage SSH keys; pre-creating SSH key")
