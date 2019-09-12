@@ -19,11 +19,12 @@ package awstasks
 import (
 	"encoding/base64"
 	"fmt"
-	"k8s.io/kops/pkg/apis/kops"
 	"math"
 	"sort"
 	"strings"
 	"time"
+
+	"k8s.io/kops/pkg/apis/kops"
 
 	"k8s.io/kops/pkg/featureflag"
 	"k8s.io/kops/upup/pkg/fi"
