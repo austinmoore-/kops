@@ -29,7 +29,7 @@ spec:
     name: events
   kubeAPIServer:
     serviceNodePortRange: 28000-32767
-  kubernetesVersion: v1.4.12
+  kubernetesVersion: v1.11.10
   masterInternalName: api.internal.nosshkey.example.com
   masterPublicName: api.nosshkey.example.com
   networkCIDR: 172.20.0.0/16
