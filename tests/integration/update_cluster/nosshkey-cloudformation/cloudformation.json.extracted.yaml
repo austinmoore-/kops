@@ -86,9 +86,9 @@ Resources.AWSAutoScalingLaunchConfigurationmasterustest1amastersnosshkeyexamplec
     local -r expected="$2"
     local actual
 
-    actual=$(sha256sum ${file} | awk '{ print $1 }') || true
+    actual=$(sha1sum ${file} | awk '{ print $1 }') || true
     if [[ "${actual}" != "${expected}" ]]; then
-      echo "== ${file} corrupted, hash ${actual} doesn't match expected ${expected} =="
+      echo "== ${file} corrupted, sha1 ${actual} doesn't match expected ${expected} =="
       return 1
     fi
   }
@@ -106,9 +106,9 @@ Resources.AWSAutoScalingLaunchConfigurationmasterustest1amastersnosshkeyexamplec
       local -r nodeup_hash="${NODEUP_HASH}"
     else
     # TODO: Remove?
-      echo "Downloading sha256 (not found in env)"
-      download-or-bust nodeup.sha256 "" "${nodeup_urls[@]/%/.sha256}"
-      local -r nodeup_hash=$(cat nodeup.sha256)
+      echo "Downloading sha1 (not found in env)"
+      download-or-bust nodeup.sha1 "" "${nodeup_urls[@]/%/.sha1}"
+      local -r nodeup_hash=$(cat nodeup.sha1)
     fi
 
     echo "Downloading nodeup (${nodeup_urls[@]})"
@@ -382,9 +382,9 @@ Resources.AWSAutoScalingLaunchConfigurationnodesnosshkeyexamplecom.Properties.Us
     local -r expected="$2"
     local actual
 
-    actual=$(sha256sum ${file} | awk '{ print $1 }') || true
+    actual=$(sha1sum ${file} | awk '{ print $1 }') || true
     if [[ "${actual}" != "${expected}" ]]; then
-      echo "== ${file} corrupted, hash ${actual} doesn't match expected ${expected} =="
+      echo "== ${file} corrupted, sha1 ${actual} doesn't match expected ${expected} =="
       return 1
     fi
   }
@@ -402,9 +402,9 @@ Resources.AWSAutoScalingLaunchConfigurationnodesnosshkeyexamplecom.Properties.Us
       local -r nodeup_hash="${NODEUP_HASH}"
     else
     # TODO: Remove?
-      echo "Downloading sha256 (not found in env)"
-      download-or-bust nodeup.sha256 "" "${nodeup_urls[@]/%/.sha256}"
-      local -r nodeup_hash=$(cat nodeup.sha256)
+      echo "Downloading sha1 (not found in env)"
+      download-or-bust nodeup.sha1 "" "${nodeup_urls[@]/%/.sha1}"
+      local -r nodeup_hash=$(cat nodeup.sha1)
     fi
 
     echo "Downloading nodeup (${nodeup_urls[@]})"
