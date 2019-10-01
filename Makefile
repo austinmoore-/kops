@@ -335,6 +335,18 @@ vsphere-version-dist: nodeup-dist protokube-export
 upload: version-dist # Upload kops to S3
 	aws s3 sync --acl public-read ${UPLOAD}/ ${S3_BUCKET}
 
+.PHONY: upload-artifactory
+upload-artifactory: version-dist
+ifndef ARTIFACTORY_USER
+		$(error "ARTIFACTORY_USER is undefined")
+endif
+ifndef ARTIFACTORY_PASSWORD
+		$(error "ARTIFACTORY_PASSWORD is undefined")
+endif
+	rm -f "${MAKEDIR}/upload.zip"
+	cd ${UPLOAD}; zip -rX "upload.zip" .
+	curl -u "${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD}" -X PUT -H "X-Explode-Archive: true" "https://artifactory.cloud.capitalone.com/artifactory/generic-internalfacing/identity-sre/" -T "${UPLOAD}/upload.zip"
+
 # gcs-upload builds kops and uploads to GCS
 .PHONY: gcs-upload
 gcs-upload: bazel-version-dist
